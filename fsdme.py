@@ -1,7 +1,7 @@
 import pyuipc
 import serial
 from time import sleep
-from threading import Thread
+#  from threading import Thread
 import time
 
 
@@ -18,7 +18,7 @@ def create_arduino_connection():
 
     Returns: a serial.Serial object (pyserial library)"""
 
-    """Try all ports if none specified."""
+    # Try all ports if none specified.
     not_found_port = True
     i = 1
     while not_found_port and i <= 4:
@@ -28,23 +28,23 @@ def create_arduino_connection():
             arduino_serial.setBaudrate(57600)
             arduino_serial.setTimeout(2)
             sleep(1.5)
-            arduino_serial.write('T') #T for test
+            arduino_serial.write('T')  # T for test
             sleep(.1)
-            arduino_serial.write('T') #T for test
+            arduino_serial.write('T')  # T for test
             x = arduino_serial.readline()
             if x == 'T':
                 not_found_port = False
                 print "Found arduino on " + arduino_serial.name
+                return arduino_serial
             else:
                 print arduino_serial.name
             i += 1
         except Exception, e:
             print e.message
-            """ This is the last try and no valid com port has been found."""
+            # This is the last try and no valid com port has been found.
             if i == 4:
                 print "Arduino not detected."
             i += 1
-    return arduino_serial
 
 #Init arduino
 arduinoSerial = create_arduino_connection()
