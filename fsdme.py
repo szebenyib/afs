@@ -46,11 +46,21 @@ def create_arduino_connection():
                 print "Arduino not detected."
             i += 1
 
+def created_prepared_data(offset, type):
+    """Creates the prepared data for the tuples or list it receives. Expected
+    is a list of offsets like 0x0300 without apostrophes and another list
+    with types as found in the fsuipc documentation (Offset status pdf),
+    and pyuipc documentation like "H" (0x0300 stands for VOR1 DME distance,
+    16-bit integer -> 2 byte unsigned value will do, so use H)"""
+    pass
+
+
 #Init arduino
 arduinoSerial = create_arduino_connection()
 
 #Init Fs2004
 create_fs_connection()
+
 
 dmeToRead = pyuipc.prepare_data([(0x0300, "H")])
 dmeValue = pyuipc.read(dmeToRead)
